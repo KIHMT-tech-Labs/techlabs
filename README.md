@@ -14,6 +14,10 @@ Our goal is to develop practical, scalable, and reliable technology solutions fo
 - Digital Products and Technology Innovation
 - Open-Source Projects
 
+## Open-Source Projects
+
+- [DevKit](projects/devkit/README.md) — dependency-free Python command-line utilities for JSON formatting, URL encoding/decoding, Base64 conversion, and Unix timestamp conversion.
+
 ## Our Mission
 
 To build useful technology that solves real-world problems and enables digital transformation.
