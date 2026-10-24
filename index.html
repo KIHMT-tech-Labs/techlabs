@@ -1,0 +1,205 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Discover AI tools for productivity, development, writing and design by KIHMT Tech Labs.">
+  <title>AI Tools Directory | KIHMT Tech Labs</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0b1020;
+      color: #f1f5f9;
+    }
+    header {
+      padding: 28px 7%;
+      border-bottom: 1px solid #263148;
+    }
+    .brand { font-size: 20px; font-weight: 700; }
+    .brand span { color: #7c9cff; }
+    main { max-width: 1100px; margin: auto; padding: 55px 22px; }
+    .hero { text-align: center; margin-bottom: 35px; }
+    h1 { font-size: clamp(32px, 5vw, 52px); margin: 0 0 16px; }
+    .hero p { color: #aab7d0; line-height: 1.7; }
+    input, select {
+      padding: 14px;
+      border: 1px solid #35425e;
+      border-radius: 10px;
+      background: #141c30;
+      color: white;
+      font-size: 15px;
+      width: 100%;
+    }
+    .filters {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 12px;
+      margin: 28px 0;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 18px;
+    }
+    .card {
+      background: #141c30;
+      border: 1px solid #293650;
+      border-radius: 14px;
+      padding: 22px;
+    }
+    .category { color: #9bb3ff; font-size: 13px; }
+    .card p { color: #b5bfd2; line-height: 1.6; min-height: 48px; }
+    .card a {
+      color: #a8bdff;
+      text-decoration: none;
+      font-weight: 700;
+    }
+    .card a:hover { text-decoration: underline; }
+    #count { color: #aab7d0; margin-bottom: 18px; }
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: #aab7d0;
+      border-top: 1px solid #263148;
+    }
+    @media (max-width: 600px) {
+      .filters { grid-template-columns: 1fr; }
+      main { padding-top: 35px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">KIHMT <span>Tech Labs</span></div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Discover AI Tools</h1>
+      <p>Explore tools that help you create, build and work smarter.</p>
+    </section>
+
+    <section class="filters">
+      <input id="search" type="search"
+        placeholder="Search AI tools..."
+        aria-label="Search AI tools">
+      <select id="category" aria-label="Filter by category">
+        <option value="All">All categories</option>
+        <option value="Writing">Writing</option>
+        <option value="Development">Development</option>
+        <option value="Design">Design</option>
+        <option value="Productivity">Productivity</option>
+      </select>
+    </section>
+
+    <p id="count" aria-live="polite"></p>
+    <section class="grid" id="tools"></section>
+  </main>
+
+  <footer>
+    AI Tools Directory · Built by KIHMT Tech Labs
+  </footer>
+
+  <script>
+    const data = [
+      {
+        name: "ChatGPT",
+        category: "Productivity",
+        description: "An AI assistant for research, writing and problem solving.",
+        url: "https://chatgpt.com/"
+      },
+      {
+        name: "GitHub Copilot",
+        category: "Development",
+        description: "An AI coding assistant for software development.",
+        url: "https://github.com/features/copilot"
+      },
+      {
+        name: "Google Gemini",
+        category: "Productivity",
+        description: "An AI assistant for exploring ideas and working with information.",
+        url: "https://gemini.google.com/"
+      },
+      {
+        name: "Canva",
+        category: "Design",
+        description: "A visual design platform with AI-powered creative features.",
+        url: "https://www.canva.com/"
+      },
+      {
+        name: "Grammarly",
+        category: "Writing",
+        description: "Writing assistance for clarity, tone and grammar.",
+        url: "https://www.grammarly.com/"
+      },
+      {
+        name: "Cursor",
+        category: "Development",
+        description: "A code editor designed for AI-assisted programming.",
+        url: "https://cursor.com/"
+      }
+    ];
+
+    const search = document.getElementById("search");
+    const category = document.getElementById("category");
+    const container = document.getElementById("tools");
+    const count = document.getElementById("count");
+
+    function render() {
+      const query = search.value.trim().toLowerCase();
+      const selected = category.value;
+
+      const results = data.filter(tool => {
+        const matchesText =
+          (tool.name + " " + tool.description + " " + tool.category)
+            .toLowerCase().includes(query);
+        const matchesCategory =
+          selected === "All" || tool.category === selected;
+        return matchesText && matchesCategory;
+      });
+
+      count.textContent = `${results.length} tools found`;
+
+      container.replaceChildren();
+
+      if (!results.length) {
+        const message = document.createElement("p");
+        message.textContent = "No tools found. Try another search.";
+        container.appendChild(message);
+        return;
+      }
+
+      results.forEach(tool => {
+        const card = document.createElement("article");
+        card.className = "card";
+
+        const label = document.createElement("span");
+        label.className = "category";
+        label.textContent = tool.category;
+
+        const title = document.createElement("h2");
+        title.textContent = tool.name;
+
+        const description = document.createElement("p");
+        description.textContent = tool.description;
+
+        const link = document.createElement("a");
+        link.href = tool.url;
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        link.textContent = "Visit website →";
+
+        card.append(label, title, description, link);
+        container.appendChild(card);
+      });
+    }
+
+    search.addEventListener("input", render);
+    category.addEventListener("change", render);
+    render();
+  </script>
+</body>
+</html>
