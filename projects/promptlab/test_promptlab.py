@@ -36,8 +36,9 @@ class PromptLabTests(unittest.TestCase):
         self.assertEqual(parse_var("endpoint=https://example.com/?a=b"),
                          ("endpoint", "https://example.com/?a=b"))
 
-    def test_duplicate_values_are_handled_by_cli_logic_contract(self):
-        self.assertEqual(parse_var("name=Anu"), ("name", "Anu"))
+    def test_invalid_variable_name_is_rejected(self):
+        with self.assertRaisesRegex(ValueError, "invalid variable name"):
+            parse_var("not-valid=value")
 
     def test_list_prompts(self):
         with tempfile.TemporaryDirectory() as tmp:
