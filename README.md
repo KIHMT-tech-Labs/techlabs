@@ -18,6 +18,7 @@ Our goal is to develop practical, scalable, and reliable technology solutions fo
 
 - [DevKit](projects/devkit/README.md) — dependency-free Python command-line utilities for JSON formatting, URL encoding/decoding, Base64 conversion, and Unix timestamp conversion.
 - [LeakCheck](projects/leakcheck/README.md) — a dependency-free local scanner for common accidentally exposed credentials, with safe reporting and unit tests.
+- [PromptLab](projects/promptlab/README.md) — local-first prompt templates with validation and rendering, written in dependency-free Python.
 
 ## Our Mission
 
